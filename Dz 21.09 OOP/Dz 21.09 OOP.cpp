@@ -115,7 +115,7 @@ int main() {
                 MatrixPlusMatrix.Print();
                 break;
             }
-            break;
+            break; 
         case 2:
             cout << "1 - Matrix - number\n";
             cout << "2 - A - B\n";
