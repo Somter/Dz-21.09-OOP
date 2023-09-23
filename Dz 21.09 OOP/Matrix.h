@@ -18,9 +18,12 @@ public:
 	Matrix<T> MinusNumber(int number);		
 	Matrix<T> MinusMatrix(Matrix<T> obj);
 	Matrix<T> MultiplyNumber(int number);		
-	Matrix<T> MultiplyMatrix(Matrix<T> obj);				
-		
-	 //~Matrix();							
+	Matrix<T> MultiplyMatrix(Matrix<T> obj);	
+	Matrix <T> DivideNumber(int number);		
+	T FindMaxElem();	
+	T FindMinElem();
+
+	 //~Matrix();								
 };
 	
 template<class T>
@@ -209,11 +212,11 @@ inline Matrix<T> Matrix<T>::MultiplyMatrix(Matrix<T> obj)
 		Matrix<T> result(rows, obj.columns);	
 
 		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < obj.columns; j++) {
-				T sum = 0;
-				for (int k = 0; k < columns; k++) {
-					sum = sum + ptr[i][k] * obj.ptr[k][j];
-				}
+			for (int j = 0; j < obj.columns; j++) {	
+				T sum = 0;	
+				for (int n = 0; n < columns; n++) {	
+					sum = sum + ptr[i][n] * obj.ptr[n][j];		
+				}	
 				result.ptr[i][j] = sum;
 			}
 		}
@@ -224,6 +227,65 @@ inline Matrix<T> Matrix<T>::MultiplyMatrix(Matrix<T> obj)
 		cout << "Matrix dimensions are not compatible for multiplication!\n";
 		return Matrix<T>();
 	}
+}
+template<class T>
+inline Matrix<T> Matrix<T>::DivideNumber(int number)		
+{	
+	if (number > 0) {
+		Matrix rezult;
+		rezult.rows = rows;	
+		rezult.columns = columns;	
+		rezult.ptr = new T* [rows];	
+
+		for (int i = 0; i < rows; i++) {
+			rezult.ptr[i] = new T [columns];	
+		}
+		for (int i = 0; i < rows; i++) {	
+			for (int j = 0; j < columns; j++) {
+				rezult.ptr[i][j] = ptr[i][j];			
+			}
+		}
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				rezult.ptr[i][j] = rezult.ptr[i][j] / number;	
+			}
+		}
+		cout << "/ " << number << " to matrix elements!\n";	
+		return rezult;	
+	}
+	else {
+		cout << "The number must be greater than zero\n";
+		return Matrix<T>();	
+	}
+}
+
+template<class T>
+inline T Matrix<T>::FindMaxElem()
+{
+	T max = ptr[0][0];
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < columns; j++) {
+			if (ptr[i][j] > max) {
+				max = ptr[i][j];
+			}
+		}
+	}
+	return max;	
+}
+
+
+template<class T>
+inline T Matrix<T>::FindMinElem()	
+{
+	T min = ptr[0][0];	
+	for (int i = 0; i < rows; i++) {	
+		for (int j = 0; j < columns; j++) {	
+			if (ptr[i][j] < min) {
+			 min = ptr[i][j];	
+			}
+		}
+	}
+	return min;	
 }
 //
 //template<class T>

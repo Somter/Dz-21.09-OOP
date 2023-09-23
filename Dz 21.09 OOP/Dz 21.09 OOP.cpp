@@ -12,11 +12,11 @@
 using namespace std;
 
 class C {
-    int x;
-public:
+    int x;  
+public: 
     C() = default;
     C(int numb) : x(numb) {}
-    int GetElem(int row, int col) const {
+    int GetElem(int row, int col) const {   
         return x;
     }
     C& operator=(int a) {
@@ -40,6 +40,15 @@ public:
     }
     C operator*(const C& obj) {
         return C(x * obj.x);
+    }       
+    C operator/(double number) {
+        return C(x / number);       
+    }    
+    bool operator>(const C& obj) const {
+        return x > obj.x;
+    }   
+    bool operator<(const C& obj) const {
+        return x < obj.x;   
     }
 };
 
@@ -73,7 +82,9 @@ int main() {
         cout << "2 - '-'\n";
         cout << "3 - '*'\n";
         cout << "4 - '/'\n";
-        cout << "5 - Print matrix\n";
+        cout << "5 - look for max element\n";
+        cout << "6 - look for min elemen\n";    
+        cout << "7 - Print matrix\n";
         cout << "Your choice: ";
         cin >> choise2;
         switch (choise2) {
@@ -190,9 +201,50 @@ int main() {
                 cout << "\n";
                 Matrix<C> MatrixMultiplyMatrix = A_matrix.MultiplyMatrix(B_matrix);
                 MatrixMultiplyMatrix.Print();
+                break;  
             }
             break;
-        }
+        case 4:
+            // A
+            int divide_numberA, divade_numberB;      
+            cout << "Enter number for 'A' matrix: ";
+            cin >> divide_numberA;  
+            cout << "A: ";
+            Matrix <C> MatrixDivideNumberA = A_matrix.DivideNumber(divide_numberA);  
+            A_matrix = move(MatrixDivideNumberA);   
+
+            // B
+            cout << "Enter number for 'B' matrix: ";    
+            cin >> divade_numberB;    
+            cout << "B: ";  
+            Matrix <C> MatrixDivideNumberB = B_matrix.DivideNumber(divade_numberB); 
+            B_matrix = move(MatrixDivideNumberB);          
+           break;  
+        case 5:
+            cout << "A:\n";
+            A_matrix.Print();
+            cout << "Max element: " << A_matrix.FindMaxElem() << "\n\n";
+
+            cout << "B:\n";
+            B_matrix.Print();   
+            cout << "Max element: " << B_matrix.FindMaxElem() << endl;  
+            break;
+        case 6:
+            cout << "A:\n";
+            A_matrix.Print();
+            cout << "Min element: " << A_matrix.FindMinElem() << "\n\n";    
+
+            cout << "B:\n";
+            B_matrix.Print();   
+            cout << "Min element: " << B_matrix.FindMinElem() << endl;      
+            break;  
+        case 7:
+            cout << "Matrix A: \n"; 
+            A_matrix.Print();       
+            cout << "Matrix B: \n"; 
+            B_matrix.Print();       
+            break;
+        }    
     }
     return 0;
 }
