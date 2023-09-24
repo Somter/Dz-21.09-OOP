@@ -8,26 +8,28 @@ private:
 	int columns;		
 	int rows;			
 	T** ptr;		
-public:
+public:	
+	static T count;		
 	Matrix() = default;		
 	Matrix(int r, int c);	
+	Matrix(int r, int c, int);		
 	void Print();	
-	T GetElem(int row, int col);	
+	T GetElem(int row, int col);
+	T SetInt(int row, int col);	
 	Matrix<T> SumNumber(int number);	
-	Matrix<T> SumMatrix(Matrix<T> obj);		
-	Matrix<T> MinusNumber(int number);		
-	Matrix<T> MinusMatrix(Matrix<T> obj);
-	Matrix<T> MultiplyNumber(int number);		
-	Matrix<T> MultiplyMatrix(Matrix<T> obj);	
-	Matrix <T> DivideNumber(int number);		
-	T FindMaxElem();	
-	T FindMinElem();
-
-	 //~Matrix();								
+	Matrix<T> SumMatrix(Matrix<T> obj);			
+	Matrix<T> MinusNumber(int number);			
+	Matrix<T> MinusMatrix(Matrix<T> obj);	
+	Matrix<T> MultiplyNumber(int number);			
+	Matrix<T> MultiplyMatrix(Matrix<T> obj);				
+	Matrix <T> DivideNumber(int number);			
+	T FindMaxElem();			
+	T FindMinElem();	
+		
+	// ~Matrix();										
 };
-	
 template<class T>
-inline Matrix<T>::Matrix(int r, int c)
+inline Matrix<T>::Matrix(int r, int c)	
 {
 	rows = r;	
 	columns = c;
@@ -42,8 +44,28 @@ inline Matrix<T>::Matrix(int r, int c)
 		{
 			ptr[i][j] = rand() % 30;
 		}
-	}
+	}		
+	count++;	
 }
+template<class T>	
+inline Matrix<T>::Matrix(int r, int c, int init)
+{
+	rows = r;
+	columns = c;	
+	ptr = new T* [rows];
+	for (int i = 0; i < rows; i++) 
+	{
+		ptr[i] = new T[columns];	
+	}
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < columns; j++) {
+			cout << "Enter element at row " << i << " column " << j << ": ";
+			cin >> ptr[i][j];
+			system("cls");	
+		}
+	}	
+	count++;	
+}	
 
 template<class T>
 inline void Matrix<T>::Print()
@@ -65,7 +87,14 @@ inline T Matrix<T>::GetElem(int row, int col)
 		return ptr[row][col];	
 	}	
 }
-
+template<class T>
+inline T Matrix<T>::SetInt(int row, int col)		
+{	
+	if (row > 0 && col > 0) {
+		rows = row;	
+		columns = col;	
+	}
+}
 template<class T>
 inline Matrix<T> Matrix<T>::SumNumber(int number)
 {
@@ -287,9 +316,11 @@ inline T Matrix<T>::FindMinElem()
 	}
 	return min;	
 }
+template<class T>
+T Matrix<T>::count = 0;		
 //
 //template<class T>
-//inline Matrix<T>::~Matrix()
+//inline Matrix<T>::~Matrix()	
 //{
 //	cout << "Destructor\n";	
 //	for (int i = 0; i < rows; i++) 
@@ -298,4 +329,4 @@ inline T Matrix<T>::FindMinElem()
 //	}
 //	delete[] ptr;		
 //	ptr = nullptr;	
-//}
+//}	
